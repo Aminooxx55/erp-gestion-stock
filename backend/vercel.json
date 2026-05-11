@@ -1,6 +1,20 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "index.js" }
+  "buildCommand": "npm install",
+  "installCommand": "npm ci",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "src/index.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/index.js"
+    }
   ]
 }
