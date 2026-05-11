@@ -1,0 +1,227 @@
+\chapter{Présentation du cadre du projet} 
+ \minitoc
+ \newpage
+ 
+\section{Introduction}
+Ce premier chapitre sera composé de plusieurs sections, parmi lesquelles la présentation de l'entité d'accueil, l'exposé de la problématique traitée dans ce projet, la description de l'approche retenue ainsi que la démarche méthodologique adoptée pour le développement du projet.
+
+\subsection{Cadre du projet}
+Ce projet s'inscrit dans le cadre de la réalisation du stage de fin d'études, effectué en vue de l'obtention du diplôme de Licence en Informatique, spécialité Génie Logiciel, à la Faculté des Sciences de Bizerte(FSB).
+
+\section{Présentation de l'organisme d'accueil}
+La société VNEXT Consulting \cite{vnext} est une entreprise tunisienne opérant dans le secteur des technologies de l'information. Fondée en 2011 et implantée à Bizerte, elle est spécialisée dans la conception et le développement d'applications informatiques. Elle développe des solutions pour le web, les plateformes mobiles et les applications desktop afin de répondre aux besoins de ses clients, tout en proposant des services de conseil, de formation et d'assistance technique.
+
+\vspace{0.5cm}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{images/Vnext-Consulting.png}
+    \caption{Page d'accueil officielle du site web de la société VNEXT Consulting}
+    \label{fig:vnext}
+\end{figure}
+
+\setcounter{subsection}{0}
+\subsection{Services}
+VNEXT Consulting intervient dans plusieurs domaines :
+\begin{itemize}[label=—]
+    \item Création de logiciels : ce secteur se concentre sur la conception et le développement d'applications informatiques répondant aux exigences des entreprises. Ces solutions facilitent la gestion des activités et l'optimisation des processus professionnels.
+
+    \item Intégration de systèmes : ce service a pour objectif d'assurer la liaison et l'interconnexion entre divers systèmes informatiques, dans le but d'optimiser la transmission des données et la synchronisation des applications.
+
+    \item Administration des infrastructures informatiques : ce champ d'action comprend la gestion, l'entretien et l'amélioration des ressources informatiques, garantissant ainsi la fiabilité et l'efficacité des systèmes.
+
+    \item Protection des systèmes d'information : l'entreprise implémente des mesures de sécurité pour protéger les données et les systèmes, dans le but de prévenir les menaces et assurer la pérennité de ses opérations.
+
+    \item Solutions ERP et cloud : VNEXT Consulting aide les entreprises à implémenter des solutions ERP et des services en nuage, favorisant ainsi la centralisation des données et l'accès à l'information en temps réel.
+\end{itemize}
+
+\subsection{Fiche signalétique}
+
+\begin{table}[H]
+\centering
+\caption{Fiche signalétique de VNEXT Consulting}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|p{5cm}|p{10cm}|}
+\hline
+\textbf{Dénomination sociale} & VNEXT Consulting \\ \hline
+\textbf{Secteur d'activité} & Technologies de l'information et conseil en ingénierie logicielle \\ \hline
+\textbf{Année de création} & 2011 \\ \hline
+\textbf{Siège social} & Bizerte, Tunisie \\ \hline
+\textbf{Adresse} & Avenue Habib Bourguiba, Immeuble Saadi, 7000 Bizerte, Tunisie \\ \hline
+\textbf{Téléphone} & +216 26 537 773 \\ \hline
+\textbf{Adresse e-mail} & contact@vnext-consulting.net \\ \hline
+\textbf{Site web} & \url{https://www.vnext-consulting.net} \\ \hline
+\textbf{LinkedIn} & \url{https://tn.linkedin.com/company/vnext-consulting} \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Problématique et critique de l'existant}
+
+Dans le cadre de notre stage, une analyse de l'existant a été menée afin d'évaluer les systèmes de gestion de stock actuellement disponibles et de mettre en lumière leurs principales limites pour les petites et moyennes entreprises (PME).
+
+Cette étude a permis de constater que la plupart des solutions existantes présentent des défis significatifs :
+
+\begin{itemize}[label=—]
+    \item \textbf{Saisie manuelle chronophage} : Les mouvements de stock sont généralement enregistrés manuellement, ce qui est source d'erreurs et consomme beaucoup de temps. La saisie de chaque entrée ou sortie de produit nécessite plusieurs étapes et une attention particulière.
+
+    \item \textbf{Absence d'intelligence décisionnelle} : Les systèmes classiques ne proposent pas d'assistant intelligent pour recommander les actions de réapprovisionnement, analyser les tendances ou formuler des prévisions basées sur les mouvements historiques.
+
+    \item \textbf{Interface peu ergonomique} : L'accès aux informations critiques sur le stock requiert de naviguer dans plusieurs écrans et rapports. Les alertes sur les ruptures de stock ne sont pas toujours visibles en temps réel.
+
+    \item \textbf{Absence de fonctionnalités modernes} : Les solutions existantes ne proposent pas de saisie par image (reconnaissance de documents) ni d'assistant conversationnel pour faciliter l'interrogation du stock et l'analyse rapide des données.
+\end{itemize}
+
+La problématique de notre projet est donc la suivante : \textit{Comment concevoir et développer une application ERP de gestion de stock qui intègre l'intelligence artificielle, une saisie simplifiée par image et un assistant conversationnel, afin de réduire le temps de traitement, d'améliorer la précision des données et de faciliter la prise de décision ?}
+
+\subsection{Solution proposée}
+
+Pour remédier aux insuffisances constatées, nous proposons de développer une application ERP complète de gestion de stock intégrant les technologies d'intelligence artificielle et de vision par ordinateur.
+
+Cette solution se compose de plusieurs modules clés :
+
+\begin{itemize}[label=—]
+    \item \textbf{Gestion centralisée des produits et catégories} : Une base de données structurée permettant de gérer l'intégralité des produits avec leurs caractéristiques (code, nom, unité, seuil d'alerte).
+
+    \item \textbf{Suivi des mouvements de stock} : Un système complet d'enregistrement des entrées et sorties avec traçabilité complète (date, quantité, motif, utilisateur).
+
+    \item \textbf{Tableau de bord interactif} : Une représentation visuelle en temps réel du stock global, des alertes de rupture et des produits sous seuil d'alerte.
+
+    \item \textbf{Assistant IA conversationnel (Gemini)} : Un assistant intelligent intégré permettant aux utilisateurs de poser des questions sur le stock, d'obtenir des résumés et des analyses, ainsi que des prévisions à court terme basées sur les tendances récentes.
+
+    \item \textbf{Saisie par image avec extraction intelligente} : Un système permettant de photographier une facture, bon de réception ou document d'inventaire. L'API de vision Gemini extrait automatiquement les produits et quantités, puis crée un projet de mouvement de stock pour confirmation avant enregistrement.
+
+    \item \textbf{Gestion des rôles et permissions} : Un système RBAC (Role-Based Access Control) garantissant que seuls les utilisateurs autorisés peuvent effectuer certaines opérations (création de mouvements, validation, etc.).
+
+    \item \textbf{Export et rapports} : La possibilité d'exporter les données en CSV pour analyses complémentaires.
+\end{itemize}
+
+Cette solution modernisée permettra de réduire significativement la charge administrative, d'accroître la précision des données et d'offrir une meilleure visibilité et réactivité aux gestionnaires de stock.
+
+\section{Méthodologie de travail }
+La sélection de la méthode de développement est une phase cruciale dans la création de l'application, cette dernière favorise considérablement l'efficacité, fournit une estimation du temps de développement et garantit une meilleure adéquation avec les exigences du client. De plus, une mauvaise sélection de la méthode de développement peut mener à l'échec d'un projet. Les approches agiles considèrent tous les éléments d'un projet informatique ainsi que son cycle de vie. 
+
+\subsection{Analyse comparative}
+
+Afin de choisir la méthodologie la plus adaptée à notre projet, une étude comparative de quelques modèles de gestion a été réalisée. Le tableau~\ref{tab:comparaison_methodes} présente une synthèse des principales méthodologies, ainsi que leurs avantages et leurs limites.
+
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+
+\begin{longtable}{|p{2.3cm}|p{4.2cm}|p{4cm}|p{4cm}|}
+\caption{Comparaison des méthodologies de gestion de projet}
+\label{tab:comparaison_methodes} \\
+
+\hline
+\textbf{Méthodologie} & \textbf{Description} & \textbf{Avantages} & \textbf{Inconvénients} \\ \hline
+\endfirsthead
+
+\hline
+\textbf{Méthodologie} & \textbf{Description} & \textbf{Avantages} & \textbf{Inconvénients} \\ \hline
+\endhead
+
+\hline
+\endfoot
+
+\textbf{Scrum} &
+Méthode agile fondée sur des itérations courtes appelées sprints, permettant une évolution progressive du projet. &
+\begin{itemize}[leftmargin=*,nosep]
+    \item Adaptation rapide aux changements
+    \item Amélioration continue
+    \item Meilleure collaboration
+    \item Livraisons régulières
+\end{itemize}
+&
+\begin{itemize}[leftmargin=*,nosep]
+    \item Demande une équipe impliquée
+    \item Nécessite une bonne organisation
+    \item Peut manquer de documentation
+\end{itemize} \\ \hline
+
+\textbf{Kanban} &
+Méthode agile basée sur la visualisation des tâches à travers un tableau de suivi. &
+\begin{itemize}[leftmargin=*,nosep]
+    \item Facile à mettre en œuvre
+    \item Bonne visibilité de l'avancement
+    \item Grande flexibilité
+\end{itemize}
+&
+\begin{itemize}[leftmargin=*,nosep]
+    \item Peu adaptée à la planification détaillée
+    \item Moins structurée pour les projets complexes
+\end{itemize} \\ \hline
+
+\textbf{Cycle en V} &
+Méthode classique dans laquelle chaque phase est réalisée de manière séquentielle. &
+\begin{itemize}[leftmargin=*,nosep]
+    \item Organisation claire
+    \item Documentation complète
+    \item Suivi rigoureux
+\end{itemize}
+&
+\begin{itemize}[leftmargin=*,nosep]
+    \item Faible souplesse
+    \item Changements difficiles à intégrer
+    \item Détection tardive des erreurs
+\end{itemize} \\ \hline
+
+\end{longtable}
+\normalsize
+
+\subsection{Sélection de la méthode}
+
+Après avoir exploré diverses méthodes agiles, nous avons opté pour le modèle Scrum afin de mener notre projet à bien. Le motif de cette décision est sa configuration qui favorise la tenue régulière de réunions, améliorant de ce fait la communication entre les participants du projet. Cela encourage le travail collaboratif et simplifie la progression des tâches.
+
+En outre, Scrum favorise le respect des délais fixés pour les différentes parties du projet et assure un suivi permanent de l'avancement. Cette approche itérative s'adapte bien au développement d'une application ERP complexe avec des fonctionnalités innovantes comme l'intégration d'IA et la vision par ordinateur.
+
+\subsection{La méthode SCRUM}
+
+L'idée fondamentale du Scrum est de concentrer l'équipe de développement sur un groupe précis de fonctionnalités à réaliser de façon itérative, dans le cadre de cycles appelés Sprints, qui durent habituellement entre deux et quatre semaines. Chaque Sprint se conclut par la remise d'une version partielle du produit.
+
+L'image suivante représente les phases du cycle de vie de Scrum~\cite{ref2}.
+
+\begin{figure}[H]
+    \centering   
+    \includegraphics[width=0.50\textwidth]{images/scrum.png}
+    \caption{Cycle de vie SCRUM}
+    \label{fig:scrum}
+\end{figure}
+
+L'approche SCRUM se compose de trois intervenants : 
+
+\begin{itemize}
+    \item \textbf{Maître Scrum}
+
+   Un Scrum Master a pour mission de s'assurer qu'une équipe Scrum travaille de façon optimale en respectant les principes fondamentaux de la méthode Scrum. Il élimine et diffuse les obstacles qui freinent la progression de l'équipe, afin que chaque membre puisse se concentrer sur sa tâche spécifique.
+
+    \item \textbf{Responsable Produit}
+
+    Un Product Owner s'assure que l'équipe Scrum est alignée avec les objectifs globaux du produit auxquels chaque membre contribue. C'est au Product Owner qu'il revient de superviser le bon déroulement du projet, garantissant ainsi que l'équipe reste centrée sur la satisfaction des besoins du produit grâce à une communication efficace et une évaluation constante des progrès.
+
+    \item \textbf{L'équipe de développement}
+
+   L'équipe travaille ensemble pour déterminer comment elle peut atteindre ses buts. Les membres de l'équipe se focalisent sur des fonctionnalités spécifiques, choisies selon l'ordre de priorité établi par le Product Owner.
+\end{itemize}
+
+\subsection{Les étapes du Sprint}
+
+Selon le Scrum Guide, le Sprint est un événement de durée fixe, inférieur ou égal à un mois, au cours duquel un incrément utile du produit est réalisé. Il englobe plusieurs étapes principales \cite{scrumguide} :
+
+\begin{itemize}
+    \item \textbf{Sprint Planning} : cette étape permet de définir l'objectif du sprint, les éléments du backlog à réaliser et le plan de travail à suivre.
+    \item \textbf{Daily Scrum} : il s'agit d'une réunion quotidienne courte permettant de suivre l'avancement du travail et d'adapter le plan si nécessaire.
+    \item \textbf{Réalisation du travail} : durant cette phase, l'équipe développe les fonctionnalités prévues afin de produire un incrément conforme à l'objectif du sprint.
+    \item \textbf{Sprint Review} : cette étape consiste à présenter l'incrément réalisé et à recueillir les retours des parties prenantes.
+    \item \textbf{Sprint Retrospective} : elle permet d'analyser le déroulement du sprint afin d'améliorer les pratiques de l'équipe pour les sprints suivants.
+\end{itemize}
+
+\subsection{Langage de modélisation UML}
+
+UML (Unified Modeling Language) est un langage graphique utilisé pour représenter un système informatique. Il permet de visualiser la structure et le fonctionnement du système à l'aide de diagrammes, facilitant ainsi la compréhension et la conception avant le développement. Dans ce projet, nous utiliserons les diagrammes de cas d'usage, les diagrammes de classes et les diagrammes de séquence pour documenter les interactions et l'architecture de l'application ERP.
+
+\section{Conclusion}
+
+Ce chapitre a posé les fondations de notre projet, au cours duquel nous avons présenté l'entité hôte (VNEXT Consulting), précisé les objectifs du projet suite à l'évaluation critique du contexte actuel, et présenté la méthodologie agile Scrum retenue pour le développement.
+
+Nous avons également identifié les lacunes majeures des solutions de gestion de stock existantes et proposé une application ERP moderne intégrant l'intelligence artificielle, la vision par ordinateur et un assistant conversationnel pour répondre aux besoins des utilisateurs en matière de saisie simplifiée, d'analyse de données et de prise de décision.
+
+Le reste de ce rapport détaillera l'architecture technique, les fonctionnalités implémentées, et les résultats obtenus lors du développement et du test de cette solution.

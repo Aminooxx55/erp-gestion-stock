@@ -1,0 +1,253 @@
+@startuml Conception Base de Donnees Complete
+
+skinparam class {
+  BackgroundColor #E6F1FB
+  BorderColor #185FA5
+  FontSize 12
+  AttributeFontSize 11
+}
+
+skinparam shadowing false
+skinparam ArrowColor #555555
+skinparam defaultFontSize 11
+
+skinparam note {
+  BackgroundColor #FFFDE7
+  BorderColor #CCCC00
+  FontSize 10
+}
+
+' ============================================
+' TABLE 1 : UTILISATEURS
+' ============================================
+
+entity "utilisateurs" as USER {
+  * **id** : UUID <<PK>>
+  --
+  * nom : VARCHAR(255)
+  * prenom : VARCHAR(255)
+  * email : VARCHAR(255) <<UNIQUE>>
+  * password_hash : VARCHAR(255)
+  * role : ENUM(admin, responsable, employe)
+  actif : BOOLEAN = true
+  derniere_connexion : TIMESTAMP
+  * createdAt : TIMESTAMP
+  * updatedAt : TIMESTAMP
+}
+
+' ============================================
+' TABLE 2 : CATEGORIES
+' ============================================
+
+entity "categories" as CAT {
+  * **id** : UUID <<PK>>
+  --
+  * nom : VARCHAR(255) <<UNIQUE>>
+  description : TEXT
+  * createdAt : TIMESTAMP
+  * updatedAt : TIMESTAMP
+}
+
+' ============================================
+' TABLE 3 : FOURNISSEURS
+' ============================================
+
+entity "fournisseurs" as FOUR {
+  * **id** : UUID <<PK>>
+  --
+  * nom : VARCHAR(255)
+  email : VARCHAR(255)
+  telephone : VARCHAR(50)
+  adresse : TEXT
+  * createdAt : TIMESTAMP
+  * updatedAt : TIMESTAMP
+}
+
+' ============================================
+' TABLE 4 : PRODUITS
+' ============================================
+
+entity "produits" as PROD {
+  * **id** : UUID <<PK>>
+  --
+  * code : VARCHAR(255) <<UNIQUE>>
+  * nom : VARCHAR(255)
+  description : TEXT
+  * unite : VARCHAR(50)
+  * quantite : INTEGER >= 0
+  * seuil_min : INTEGER >= 0
+  prix_unitaire : DECIMAL(10,2)
+  emplacement : VARCHAR(255)
+  * categorie_id : UUID <<FK>>
+  * actif : BOOLEAN = true
+  * createdAt : TIMESTAMP
+  * updatedAt : TIMESTAMP
+}
+
+' ============================================
+' TABLE 5 : MOUVEMENT_STOCKS
+' ============================================
+
+entity "mouvement_stocks" as MVT {
+  * **id** : UUID <<PK>>
+  --
+  * type : ENUM(entree, sortie)
+  * quantite : INTEGER > 0
+  reference : VARCHAR(255)
+  motif : VARCHAR(255)
+  * date : TIMESTAMP
+  * produit_id : UUID <<FK>>
+  * user_id : UUID <<FK>>
+  fournisseur_id : UUID <<FK>>
+  client : VARCHAR(255)
+  * createdAt : TIMESTAMP
+  * updatedAt : TIMESTAMP
+}
+
+' ============================================
+' TABLE 6 : INVENTAIRES
+' ============================================
+
+entity "inventaires" as INV {
+  * **id** : UUID <<PK>>
+  --
+  * date : DATE
+  * statut : ENUM(en_cours, valide, annule)
+  observations : TEXT
+  * user_id : UUID <<FK>>
+  * createdAt : TIMESTAMP
+  * updatedAt : TIMESTAMP
+}
+
+' ============================================
+' TABLE 7 : LIGNE_INVENTAIRES
+' ============================================
+
+entity "ligne_inventaires" as LIGNE {
+  * **id** : UUID <<PK>>
+  --
+  * stock_systeme : INTEGER
+  * stock_reel : INTEGER
+  * ecart : INTEGER
+  observations : VARCHAR(255)
+  * inventaire_id : UUID <<FK>>
+  * produit_id : UUID <<FK>>
+}
+
+' ============================================
+' TABLE 8 : ALERTES
+' ============================================
+
+entity "alertes" as ALERT {
+  * **id** : UUID <<PK>>
+  --
+  * type : ENUM(rupture, seuil_min, ecart_inventaire)
+  * message : VARCHAR(255)
+  * statut : ENUM(active, lue, resolue)
+  * produit_id : UUID <<FK>>
+  user_id : UUID <<FK>>
+  * createdAt : TIMESTAMP
+  * resolue_at : TIMESTAMP
+}
+
+' ============================================
+' TABLE 9 : LOGS_ACTIVITE (pour dashboard)
+' ============================================
+
+entity "logs_activite" as LOG {
+  * **id** : UUID <<PK>>
+  --
+  * action : VARCHAR(255)
+  * entite : VARCHAR(100)
+  * entite_id : UUID
+  details : TEXT
+  * user_id : UUID <<FK>>
+  * createdAt : TIMESTAMP
+}
+
+' ============================================
+' RELATIONS
+' ============================================
+
+CAT ||--o{ PROD : "contient"
+USER ||--o{ MVT : "saisit"
+USER ||--o{ INV : "realise"
+USER ||--o{ LOG : "effectue"
+USER ||--o{ ALERT : "recoit"
+PROD ||--o{ MVT : "concerne"
+PROD ||--o{ LIGNE : "concerne"
+PROD ||--o{ ALERT : "declenche"
+FOUR ||--o{ MVT : "fournit"
+INV ||--o{ LIGNE : "contient"
+
+' ============================================
+' NOTES
+' ============================================
+
+note top of USER
+  **Securite :**
+  - Hash bcrypt (cout 12)
+  - JWT RS256 pour auth
+  - RBAC middleware
+  - Soft delete (actif=false)
+  - Historique connexions
+end note
+
+note top of PROD
+  **Gestion stock :**
+  - Code unique par produit
+  - quantite >= 0 toujours
+  - seuil_min declenche alertes
+  - prix_unitaire pour valorisation
+  - emplacement pour localisation
+end note
+
+note bottom of MVT
+  **Regles metier :**
+  - Entree : quantite + N
+  - Sortie : quantite - N
+  - Sortie bloquee si stock < quantite (409)
+  - Transaction ACID (BEGIN/COMMIT)
+  - reference = N° bon livraison/sortie
+end note
+
+note bottom of ALERT
+  **Alertes automatiques :**
+  - rupture : quantite = 0
+  - seuil_min : quantite <= seuil_min
+  - ecart_inventaire : stock_reel != stock_systeme
+  - Statut : active → lue → resolue
+end note
+
+note bottom of LOG
+  **Dashboard :**
+  - Total produits en stock
+  - Produits en rupture (quantite=0)
+  - Produits sous seuil minimum
+  - Entrees/sorties du mois
+  - Top produits par mouvement
+  - Valeur totale stock
+  - Historique actions utilisateurs
+end note
+
+note right of INV
+  **Inventaire :**
+  - Statut workflow :
+    en_cours → valide → MAJ stock
+    en_cours → annule
+  - ecart = stock_reel - stock_systeme
+  - Validation met a jour les quantites
+end note
+
+note as LEGENDE
+  **Legende :**
+  * = NOT NULL (obligatoire)
+  <<PK>> = Cle primaire
+  <<FK>> = Cle etrangere
+  <<UNIQUE>> = Valeur unique
+  ||--o{ = Un vers plusieurs (1..*)
+  
+  **9 tables | 5 ENUM | 12 FK**
+end note
+
+@enduml
